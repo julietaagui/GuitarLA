@@ -1,4 +1,14 @@
-export default function Header({cart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart, isEmpaty, cartTotal}) {
+export default function Header({ cart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart, isEmpaty, cartTotal }) {
+    
+    function processPayment(cartTotal) {
+        if (cartTotal > 0) {
+            alert(`Pago realizado con éxito por un total de $${cartTotal}. ¡Gracias por tu compra!`);
+            clearCart();
+        } else {
+            alert("El carrito está vacío. Agrega productos antes de pagar.");
+        }
+    }
+
     return(
         <header className="py-5 header">
             <div className="container-xl">
@@ -9,15 +19,12 @@ export default function Header({cart, removeFromCart, increaseQuantity, decrease
                         </a>
                     </div>
                     <nav className="col-md-6 a mt-5 d-flex align-items-start justify-content-end">
-                        <div 
-                            className="carrito"
-                        >
+                        <div className="carrito">
                             <img className="img-fluid" src="/img/carrito.png" alt="imagen carrito" />
 
                             <div id="carrito" className="bg-white p-3">
-                                
                                 {isEmpaty ? (
-                                    <p className="text-center">El carrito esta vacio</p>
+                                    <p className="text-center">El carrito está vacío</p>
                                 ) : (
                                     <>
                                     <table className="w-100 table">
@@ -34,16 +41,10 @@ export default function Header({cart, removeFromCart, increaseQuantity, decrease
                                             {cart.map(guitar => (
                                                 <tr key={guitar.id}>
                                                     <td>
-                                                        <img 
-                                                        className="img-fluid" 
-                                                        src={`/img/${guitar.image}.jpg`} 
-                                                        alt="imagen guitarra"
-                                                        />
+                                                        <img className="img-fluid" src={`/img/${guitar.image}.jpg`} alt="imagen guitarra" />
                                                     </td>
                                                     <td>{guitar.name}</td>
-                                                    <td className="fw-bold">
-                                                            {guitar.price}
-                                                    </td>
+                                                    <td className="fw-bold">{guitar.price}</td>
                                                     <td className="flex align-items-start gap-4">
                                                         <button
                                                             type="button"
@@ -52,7 +53,7 @@ export default function Header({cart, removeFromCart, increaseQuantity, decrease
                                                         >
                                                             -
                                                         </button>
-                                                            {guitar.quantity}
+                                                        {guitar.quantity}
                                                         <button
                                                             type="button"
                                                             className="btn btn-dark"
@@ -65,7 +66,7 @@ export default function Header({cart, removeFromCart, increaseQuantity, decrease
                                                         <button
                                                             className="btn btn-danger"
                                                             type="button"
-                                                            onClick={() => removeFromCart(guitar.id) }
+                                                            onClick={() => removeFromCart(guitar.id)}
                                                         >
                                                             X
                                                         </button>
@@ -74,12 +75,11 @@ export default function Header({cart, removeFromCart, increaseQuantity, decrease
                                             ))}
                                         </tbody>
                                     </table>
-                                    <p className="text-end">Total pagar: <span className="fw-bold">${cartTotal}</span></p>
-                                </>
+                                    <p className="text-end">Total a pagar: <span className="fw-bold">${cartTotal}</span></p>
+                                    <button className="btn btn-dark w-100 mt-3 p-2" onClick={clearCart}>Vaciar Carrito</button>
+                                    <button className="btn btn-success w-100 mt-3 p-2" onClick={() => processPayment(cartTotal)}>Pagar</button>
+                                    </>
                                 )}
-                                <button 
-                                className="btn btn-dark w-100 mt-3 p-2" 
-                                onClick={clearCart}>Vaciar Carrito</button>
                             </div>
                         </div>
                     </nav>

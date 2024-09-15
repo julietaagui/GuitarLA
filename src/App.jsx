@@ -26,6 +26,7 @@ export default function App() {
                     key={guitar.id} 
                     guitar={guitar} 
                     addToCart={addToCart}
+                
                 />
             ))}
         </div>

@@ -61,7 +61,7 @@ export const useCart = () =>{
         })
         setCart(updatedCart)
     }
-
+    
     function clearCart(){
         setCart([])
     }
@@ -69,6 +69,19 @@ export const useCart = () =>{
     //State derivado
     const isEmpaty = useMemo(() => cart.length === 0, [cart]) 
     const cartTotal = useMemo(() => cart.reduce((total, item) => total + (item.quantity * item.price),0),[cart])
+
+    // Metodo de pago
+
+    function processPayment(cartTotal) {
+        if (cartTotal > 0) {
+            alert(`Pago realizado con éxito por un total de $${cartTotal}. ¡Gracias por tu compra!`);
+            // Aquí puedes vaciar el carrito después de la compra
+            clearCart();
+        } else {
+            alert("El carrito está vacío. Agrega productos antes de pagar.");
+        }
+    }
+    
 
     return{
         data, 
